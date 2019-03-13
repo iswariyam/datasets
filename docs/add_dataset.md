@@ -170,6 +170,17 @@ def _split_generators(self, dl_manager):
   dl_paths['foo'], dl_paths['bar']
 ```
 
+To ensure downloaded resources match expectations, size and checksum of files
+are stored in the repository. You must create the file where this data will be
+stored, TFDS will populate content when new files are downloaded. That file
+must be submitted with the code.
+
+```sh
+touch tensorflow_datasets/url_checksums/my_new_dataset.txt
+```
+
+The first time the file is downloaded, checksum will be added to that file.
+
 ### Manual download and extraction
 
 For source data that cannot be automatically downloaded (for
@@ -450,10 +461,15 @@ Run `download_and_prepare` locally to ensure that data generation works:
 ```
 # default data_dir is ~/tensorflow_datasets
 python -m tensorflow_datasets.scripts.download_and_prepare \
+  --store_checksums \
   --datasets=my_new_dataset
 ```
 
 Copy in the contents of the `dataset_info.json` file(s) to a [GitHub gist](https://gist.github.com/) and link to it in your pull request.
+
+Note that the `--store_checksums` flag must only be used while in development.
+It tells TFDS to store the size and checksum of downloaded files in the file
+you touched [earlier](#downloading-and-extracting-source-data).
 
 
 ### 3. Double-check the citation

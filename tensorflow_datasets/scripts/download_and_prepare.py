@@ -75,6 +75,10 @@ flags.DEFINE_integer(
     "max_examples_per_split", None,
     "optional max number of examples to write into each split (for testing).")
 
+# Development flags
+flags.DEFINE_boolean("store_checksums", False,
+                     "If True, store size and checksum of downloaded files.")
+
 # Debug flags
 flags.DEFINE_boolean("debug", False,
                      "If True, will drop into debugger after data generation")
@@ -115,6 +119,8 @@ def main(_):
     pdb.set_trace()
   if FLAGS.sleep_start:
     time.sleep(60*60*3)
+  if FLAGS.store_checksums:
+    tfds.download.set_register_checksums(register=True)
 
   datasets_to_build = set(FLAGS.datasets and FLAGS.datasets.split(",")
                           or tfds.list_builders())

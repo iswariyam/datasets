@@ -15,6 +15,7 @@
 
 """`tfds.download.DownloadManager` API."""
 
+from tensorflow_datasets.core.download.checksums_management import set_register_checksums
 from tensorflow_datasets.core.download.download_manager import DownloadConfig
 from tensorflow_datasets.core.download.download_manager import DownloadManager
 from tensorflow_datasets.core.download.extractor import iter_archive
@@ -31,4 +32,5 @@ __all__ = [
     "Resource",
     "ExtractMethod",
     "iter_archive",
+    "set_register_checksums",
 ]
